@@ -18,7 +18,7 @@ searchInput.addEventListener('keydown',function (event){
         searchQuery = searchInput.value
         if(searchQuery){
             activeBtn = 'search'
-            filterArray()
+            filter()
             searchInput.value = ''
         }
     }
@@ -35,7 +35,7 @@ inputTask.addEventListener('keydown',function (event) {
             taskArray.push(toDo)
             classifiedOutput.push(toDo)
             inputTask.value = ''
-            filterArray()
+            filter()
         }
     }
 })
@@ -43,20 +43,20 @@ btnAll.addEventListener('focus', function (){
     toDoLabel.innerHTML = 'Tasks to do &#8595'
     activeBtn = 'all'
     btnAll.style.filter = 'brightness(.9)'
-    filterArray()
+    filter()
 })
 btnDone.addEventListener('focus', function (){
     toDoLabel.innerHTML = 'Completed today &#8595'
     activeBtn = 'done'
 
     btnAll.style.filter = 'brightness(1)'
-    filterArray()
+    filter()
 })
 btnUndone.addEventListener('focus', function (){
     toDoLabel.innerHTML = 'In progress &#8595'
     activeBtn = 'undone'
     btnAll.style.filter = 'brightness(1)'
-    filterArray()
+    filter()
 })
 
 function addTask(toDo){
@@ -91,7 +91,7 @@ function addTask(toDo){
                 }
             })
         }
-        filterArray()
+        filter()
     })
     deleteIcon.addEventListener('click',function (event){
         taskArray = taskArray.filter(function (todo){
@@ -100,13 +100,13 @@ function addTask(toDo){
             }
             return todo.name !== event.target.previousSibling.innerHTML
         })
-        filterArray()
+        filter()
     })
     newTask.append(taskCheckBox,taskText,deleteIcon)
     return newTask
 }
 
-function filterArray(){
+function filter(){
     searchList.style.display = 'none'
     taskList.style.display = 'block'
     taskList.replaceChildren()
