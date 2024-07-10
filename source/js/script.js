@@ -1,6 +1,7 @@
 let taskArray = []
 let filteredArray = []
-// let searchOutput = []
+let doneTasksArray = []
+let undoneTasksArray = []
 let toDo =  {}
 let activeBtn = 'all'
 let isSearching = false
@@ -83,70 +84,72 @@ function addTask(toDo){
     deleteIcon.className ='fa fa-trash-o delete'
     editBox.append(editIcon,deleteIcon)
     taskCheckBox.checked = toDo.checked === 'true';
-    taskCheckBox.addEventListener('click', function (event){
-        let checkedItem
-        if(event.target.checked){
-            taskArray.find(function (todo){
-                if(todo.name === event.target.nextSibling.innerHTML){
-                    todo.checked = 'true'
-                    checkedItem = todo
-                }
-            })
-            taskArray = taskArray.filter(function (todo){
-                return todo.name !== checkedItem.name
-            })
-            taskArray.push(checkedItem)
-        }
-        else {
-            taskArray.find(function (todo){
-                if(todo.name === event.target.nextSibling.innerHTML){
-                    todo.checked = 'false'
-                }
-            })
-        }
-        filter()
-    })
-    editIcon.addEventListener('click', function (event){
-        let editModal = $.createElement('div')
-        editModal.className = 'edit--modal'
-        let closeModal = $.createElement('i')
-        closeModal.className = 'fa fa-close close--modal'
-        let modalInput = $.createElement('input')
-        modalInput.className = 'modal--input'
-        modalInput.value = taskText.innerHTML
-        editModal.append(closeModal,modalInput)
-        $.querySelector('.site--container').style.opacity = '0.3'
-        editModal.style.opacity = '1'
-        closeModal.addEventListener('click',function (event){
-            event.target.parentElement.remove()
-            $.querySelector('.site--container').style.opacity = '1'
-        })
-
-        modalInput.addEventListener('keydown',function (event){
-            if(event.key === 'Enter'){
-                toDo.name =event.target.value
-                event.target.value = ''
-                filter()
-                $.querySelector('.site--container').style.opacity = '1'
-                event.target.parentElement.remove()
-            }
-        })
-        $.body.append(editModal)
-    })
-    deleteIcon.addEventListener('click',function (event){
-        let removedItem = event.target.parentElement.previousSibling
-        taskArray = taskArray.filter(function (todo){
-            return todo.name !== removedItem.innerHTML
-        })
-        filteredArray = filteredArray.filter(function (todo){
-            return todo.name !== removedItem.innerHTML
-        })
-
-        filter()
-    })
+    taskCheckBox.addEventListener('click', handleCheckBoxClick)
+    editIcon.addEventListener('click', handleEditTask)
+    deleteIcon.addEventListener('click', handleDeleteTask)
     newTask.append(taskCheckBox,taskText,editBox)
     return newTask
 }
+function handleCheckBoxClick(event){
+    let checkedItem
+    if(event.target.checked){
+        taskArray.find(function (todo){
+            if(todo.name === event.target.nextSibling.innerHTML){
+                todo.checked = 'true'
+                checkedItem = todo
+            }
+        })
+        taskArray = taskArray.filter(function (todo){
+            return todo.name !== checkedItem.name
+        })
+        taskArray.push(checkedItem)
+    }
+    else {
+        taskArray.find(function (todo){
+            if(todo.name === event.target.nextSibling.innerHTML){
+                todo.checked = 'false'
+            }
+        })
+    }
+    filter()
+}
+function handleDeleteTask(event){
+    let removedItem = event.target.parentElement.previousSibling
+    taskArray = taskArray.filter(function (todo){
+        return todo.name !== removedItem.innerHTML
+    })
+    filteredArray = filteredArray.filter(function (todo){
+        return todo.name !== removedItem.innerHTML
+    })
+    filter()
+}
+function handleEditTask(event){
+    let editModal = $.createElement('div')
+    editModal.className = 'edit--modal'
+    let closeModal = $.createElement('i')
+    closeModal.className = 'fa fa-close close--modal'
+    let modalInput = $.createElement('input')
+    modalInput.className = 'modal--input'
+    modalInput.value = taskText.innerHTML
+    editModal.append(closeModal,modalInput)
+    $.querySelector('.site--container').style.opacity = '0.3'
+    editModal.style.opacity = '1'
+    closeModal.addEventListener('click',function (event){
+        event.target.parentElement.remove()
+        $.querySelector('.site--container').style.opacity = '1'
+    })
+    modalInput.addEventListener('keydown',function (event){
+        if(event.key === 'Enter'){
+            toDo.name =event.target.value
+            event.target.value = ''
+            filter()
+            $.querySelector('.site--container').style.opacity = '1'
+            event.target.parentElement.remove()
+        }
+    })
+    $.body.append(editModal)
+}
+
 function filter(){
     if (activeBtn === 'all') {
         taskList.replaceChildren()
