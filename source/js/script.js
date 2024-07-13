@@ -1,11 +1,12 @@
 let taskArray = []
-let filteredArray = []
-let doneTasksArray = []
-let undoneTasksArray = []
 let toDo =  {}
+let filteredArray = []
+let checkedTasks = []
+let uncheckedTasks = []
 let activeBtn = 'all'
 let isSearching = false
 let searchQuery
+
 let $ = document
 let searchInput = $.querySelector('.search--input')
 let toDoLabel = $.querySelector('.todo--label')
@@ -68,6 +69,7 @@ btnUndone.addEventListener('click', function (){
     btnUndone.style.filter = 'brightness(.9)'
     filter()
 })
+
 function addTask(toDo){
     let newTask = $.createElement('li')
     newTask.className = 'list-group-item d-flex justify-content-between align-items-center'
@@ -91,25 +93,39 @@ function addTask(toDo){
     return newTask
 }
 function handleCheckBoxClick(event){
-    let checkedItem
     if(event.target.checked){
+        let checkedItem
         taskArray.find(function (todo){
             if(todo.name === event.target.nextSibling.innerHTML){
                 todo.checked = 'true'
                 checkedItem = todo
             }
         })
-        taskArray = taskArray.filter(function (todo){
-            return todo.name !== checkedItem.name
+        checkedTasks = taskArray.filter(function (todo){
+            return todo.checked === 'true' && todo.name !== checkedItem.name
         })
-        taskArray.push(checkedItem)
+        checkedTasks.push(checkedItem)
+        uncheckedTasks = taskArray.filter(function (todo){
+            return todo.checked === 'false'
+        })
+        taskArray = uncheckedTasks.concat(checkedTasks)
     }
     else {
+        let uncheckedItem
         taskArray.find(function (todo){
             if(todo.name === event.target.nextSibling.innerHTML){
                 todo.checked = 'false'
+                uncheckedItem = todo
             }
         })
+        checkedTasks = taskArray.filter(function (todo){
+            return todo.checked === 'true'
+        })
+        uncheckedTasks = uncheckedTasks.filter(function (todo){
+            return todo.checked === 'false' && todo.name !== uncheckedItem.name
+        })
+        uncheckedTasks.push(uncheckedItem)
+        taskArray = uncheckedTasks.concat(checkedTasks)
     }
     filter()
 }
@@ -130,7 +146,7 @@ function handleEditTask(event){
     closeModal.className = 'fa fa-close close--modal'
     let modalInput = $.createElement('input')
     modalInput.className = 'modal--input'
-    modalInput.value = taskText.innerHTML
+    modalInput.value = event.target.parentElement.previousSibling.innerHTML
     editModal.append(closeModal,modalInput)
     $.querySelector('.site--container').style.opacity = '0.3'
     editModal.style.opacity = '1'
@@ -169,9 +185,9 @@ function filter(){
         if(!filteredArray.length){
             inputTask.placeholder = 'Empty!'
         } else{
+            inputTask.placeholder = 'Add a new task'
             filteredArray.forEach(function (todo){
                 taskList.appendChild(addTask(todo))
-                inputTask.placeholder = 'Add a new task'
             })
         }
     }
@@ -184,9 +200,9 @@ function filter(){
         if(!filteredArray.length){
             inputTask.placeholder = 'Empty!'
         } else{
+            inputTask.placeholder = 'Add a new task'
             filteredArray.forEach(function (todo){
                 taskList.appendChild(addTask(todo))
-                inputTask.placeholder = 'Add a new task'
             })
         }
     }
