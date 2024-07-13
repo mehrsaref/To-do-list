@@ -10,7 +10,7 @@ let searchQuery
 let $ = document
 let searchInput = $.querySelector('.search--input')
 let toDoLabel = $.querySelector('.todo--label')
-let inputTask = $.querySelector('.todo--input')
+let inputTask = $.querySelector('.task--input')
 let taskList = $.querySelector('.task--list')
 let btnAll = $.querySelector('.all--btn')
 let btnDone = $.querySelector('.done--btn')

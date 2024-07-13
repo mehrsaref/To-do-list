@@ -6,7 +6,7 @@ body {
     width: 65%;
     margin: 0 auto;
     .header{
-      .todo--logo{
+      .header__logo{
         width: 15%;
         height: fit-content;
         position: absolute;
@@ -16,7 +16,7 @@ body {
           width: 100%;
         }
       }
-      .search--box{
+      .header__searchbar{
         width: 100%;
         margin: 3rem auto;
         border-radius: 20px;
@@ -37,7 +37,7 @@ body {
           outline: none;
         }
       }
-      .search--box:focus-within{
+      .header__searchbar:focus-within{
         box-shadow: darkgray 2px 2px 10px;
       }
     }
@@ -46,7 +46,7 @@ body {
       justify-content: space-between;
       position: relative;
       margin-bottom: 2rem;
-      .todo--box{
+      .main__tasks{
         width: 50%;
         box-shadow: darkgray 2px 2px 10px;
         padding: 2rem;
@@ -66,8 +66,8 @@ body {
             margin: 0;
             font-size: 22px;
           }
-          .todo--input,
-          .todo--input:focus{
+          .task--input,
+          .task--input:focus{
             margin: 0 !important;
             width: 100%;
             padding: 5px 10px;
@@ -77,7 +77,7 @@ body {
             border: none;
             border-radius: 20px;
           }
-          .todo--input:focus{
+          .task--input:focus{
             box-shadow: 0 0 5px rgba(122, 177, 214, 0.5) !important;
           }
         }
@@ -134,12 +134,12 @@ body {
           display: none;
         }
       }
-      .filter{
+      .main__filtering{
         width: 42%;
         display: flex;
         flex-direction: column;
         align-items: center;
-        .filter__buttons{
+        .filtering__buttons{
           width: 100%;
           display: flex;
           justify-content: space-between;
@@ -160,7 +160,7 @@ body {
             outline: none;
           }
         }
-        .filter__logo{
+        .filtering__logo{
           width: 80%;
           img{
             width: 100%;
@@ -177,7 +177,7 @@ body {
     left: 0;
     right: 0;
     top: 200px;
-    z-index: 20;
+    z-index: 2;
     border-radius: 14px;
     margin: 0 auto;
     display: flex;
