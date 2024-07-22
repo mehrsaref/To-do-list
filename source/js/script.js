@@ -172,6 +172,13 @@ function handleEditTask(event){
 
 function filter(){
     if (activeBtn === 'all') {
+        checkedTasks = taskArray.filter(function(todo){
+            return todo.checked === 'true'
+        })
+        uncheckedTasks = taskArray.filter(function(todo){
+            return todo.checked === 'false'
+        })
+        taskArray= uncheckedTasks.concat(checkedTasks)
         taskList.replaceChildren()
         filteredArray = []
         filteredArray = taskArray
