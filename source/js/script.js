@@ -190,9 +190,7 @@ function filter(){
     if(activeBtn === 'done'){
         taskList.replaceChildren()
         filteredArray = []
-        filteredArray = taskArray.filter(function (todo){
-            return todo.checked === 'true'
-        })
+        filteredArray = checkedTasks
         if(!filteredArray.length){
             inputTask.placeholder = 'Empty!'
         } else{
@@ -205,9 +203,7 @@ function filter(){
     if(activeBtn === 'undone'){
         taskList.replaceChildren()
         filteredArray = []
-        filteredArray = taskArray.filter(function (todo){
-            return todo.checked === 'false'
-        })
+        filteredArray = uncheckedTasks
         if(!filteredArray.length){
             inputTask.placeholder = 'Empty!'
         } else{
