@@ -16,6 +16,10 @@ let btnAll = $.querySelector('.all--btn')
 let btnDone = $.querySelector('.done--btn')
 let btnUndone = $.querySelector('.undone--btn')
 
+window.addEventListener('load', function(){
+    taskArray = JSON.parse(localStorage.getItem('tasks'))
+    filter()
+})
 searchInput.addEventListener('keydown',function (event){
     if(event.key === 'Enter'){
         searchQuery = searchInput.value
@@ -228,4 +232,5 @@ function filter(){
         })
 
     }
+    localStorage.setItem('tasks',JSON.stringify(taskArray))
 }
