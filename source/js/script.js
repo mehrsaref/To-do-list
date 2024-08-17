@@ -146,13 +146,14 @@ function handleDeleteTask(event){
     filter()
 }
 function handleEditTask(event){
+    let toDoName = event.target.parentElement.previousSibling.innerHTML
     let editModal = $.createElement('div')
     editModal.className = 'edit--modal'
     let closeModal = $.createElement('i')
     closeModal.className = 'fa fa-close close--modal'
     let modalInput = $.createElement('input')
     modalInput.className = 'modal--input'
-    modalInput.value = event.target.parentElement.previousSibling.innerHTML
+    modalInput.value = toDoName
     editModal.append(closeModal,modalInput)
     $.querySelector('.site--container').style.opacity = '0.3'
     editModal.style.opacity = '1'
@@ -162,7 +163,11 @@ function handleEditTask(event){
     })
     modalInput.addEventListener('keydown',function (event){
         if(event.key === 'Enter'){
-            toDo.name =event.target.value
+            taskArray.find(function(task){
+                if(task.name === toDoName){
+                    task.name = event.target.value
+                }
+            })
             event.target.value = ''
             filter()
             $.querySelector('.site--container').style.opacity = '1'
